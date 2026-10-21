@@ -1,0 +1,174 @@
+{
+  "common": {
+    "siteTitle": "OurTaiko · Profile",
+    "close": "关闭"
+  },
+  "messages": {
+    "changeColorTheme": "切换配色",
+    "light": "浅色",
+    "dark": "深色",
+    "system": "跟随系统",
+    "pageNotFound": "页面不存在",
+    "backHome": "返回首页"
+  },
+  "nav": {
+    "main": "主导航",
+    "myPage": "我的主页",
+    "titles": "称号目录",
+    "admin": "管理",
+    "connecting": "连接中…",
+    "accountCenter": "账号中心",
+    "signOut": "退出登录",
+    "signIn": "登录"
+  },
+  "home": {
+    "heading": "你的太鼓之旅，一页看全",
+    "lead": "用 OurTaiko 账号登录，查看你在 Fanmade 和 Database 的全部成绩，收集称号和段位，挑选游戏里显示的名牌。",
+    "register": "注册账号",
+    "signInFailed": "登录没有完成，请再试一次。",
+    "scoresTitle": "全部成绩",
+    "scoresText": "两台服务器的成绩合在一张表：每首的最佳成绩和每一局游玩记录。",
+    "titlesTitle": "称号与段位",
+    "titlesText": "挑战在线段位获得段位徽章和称号，社区段位的称号会标明来源。",
+    "plateTitle": "名牌",
+    "plateText": "选好佩戴的称号，游戏里 1P、2P 的名牌都会跟着变。"
+  },
+  "profile": {
+    "unknownPlayer": "玩家",
+    "accountCenterDown": "账号中心暂时没有响应，昵称和头像稍后显示。",
+    "sections": "主页分区",
+    "tabs": {
+      "scores": "成绩",
+      "titles": "称号",
+      "dans": "段位"
+    }
+  },
+  "scores": {
+    "view": "显示方式",
+    "best": "最佳成绩",
+    "all": "游玩记录",
+    "bestExplained": "每个谱面块一行：分数取最高的一局，皇冠取所有游玩里最好的；谱面换过文件时优先显示新版本的成绩。",
+    "source": "服务器",
+    "allSources": "全部服务器",
+    "course": "难度",
+    "allCourses": "全部难度",
+    "sort": "排序",
+    "sorts": {
+      "level": "星级",
+      "score": "分数",
+      "recent": "时间"
+    },
+    "sourceDown": "{{name}} 暂时没有响应，先显示其他服务器的成绩。",
+    "truncated": "{{name}} 的成绩太多，只显示最近的 2000 条。",
+    "empty": "还没有成绩。",
+    "song": "歌曲",
+    "score": "分数",
+    "judgements": "良 / 可 / 不可",
+    "maxCombo": "最大连段",
+    "plays": "游玩次数",
+    "playedAt": "时间",
+    "oldVersion": "旧版本",
+    "previous": "上一页",
+    "next": "下一页",
+    "crown": {
+      "title": "皇冠",
+      "clear": "通关",
+      "fullCombo": "全连",
+      "allGood": "全良"
+    }
+  },
+  "courses": {
+    "Easy": "简单",
+    "Normal": "普通",
+    "Hard": "困难",
+    "Oni": "魔王",
+    "Edit": "里魔王"
+  },
+  "titles": {
+    "held": "已获得的称号",
+    "heldExplained": "挑战在线段位等方式获得的称号。",
+    "wearExplained": "选择一个称号佩戴，游戏和网站上的名牌都会显示它。",
+    "showDan": "名牌上显示最高段位",
+    "none": "还没有称号。",
+    "official": "官方",
+    "community": "社区",
+    "byAdmin": "管理员授予",
+    "wear": "佩戴",
+    "takeOff": "取下",
+    "catalogLink": "查看全部称号",
+    "catalog": "称号目录",
+    "catalogExplained": "所有可以获得的称号，以及它们在名牌上的样子。",
+    "catalogEmpty": "还没有称号。"
+  },
+  "dans": {
+    "badges": "段位徽章",
+    "badgesExplained": "官方在线段位合格后获得；红色为赤合格，金色为金合格，只升不降。",
+    "notYet": "未获得",
+    "history": "挑战记录",
+    "noHistory": "还没有在线段位挑战。",
+    "course": "段位",
+    "result": "结果",
+    "date": "日期",
+    "verdict": {
+      "failed": "不合格",
+      "red": "赤合格",
+      "redFullCombo": "赤合格・全连",
+      "redAllGood": "赤合格・全良",
+      "gold": "金合格",
+      "goldFullCombo": "金合格・全连",
+      "goldAllGood": "金合格・全良"
+    }
+  },
+  "admin": {
+    "editTitle": "新建或修改称号",
+    "editTitleExplained": "ID 只能用小写字母、数字和连字符，保存后不能改。同一 ID 再次保存即为修改。",
+    "id": "ID",
+    "name": "名称",
+    "nameIn": "名称（{{language}}）",
+    "description": "说明",
+    "style": "样式",
+    "official": "官方称号（社区段位不能授予）",
+    "save": "保存",
+    "saved": "已保存。",
+    "catalog": "全部称号",
+    "edit": "修改",
+    "delete": "删除",
+    "confirmDelete": "删除称号 {{id}}？已获得它的玩家也会失去它。",
+    "deleted": "已删除。",
+    "grant": "手动授予称号",
+    "grantExplained": "用于活动或测试。用户 ID 是账号中心的 32 位 ID。",
+    "userId": "用户 ID",
+    "title": "称号",
+    "grantButton": "授予",
+    "revokeButton": "收回",
+    "granted": "已授予。",
+    "revoked": "已收回。",
+    "styles": {
+      "wood": "木纹",
+      "teal": "青绿",
+      "wood2": "浅木纹",
+      "purple": "紫色",
+      "gold": "金色",
+      "rainbow": "彩虹"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "ja": "日本語",
+    "ko": "한국어"
+  },
+  "errors": {
+    "unexpected": "服务器返回了意外的结果（{{status}}），请稍后再试。",
+    "UNAUTHORIZED": "请先登录。",
+    "CSRF_INVALID": "会话已更新，请刷新页面后重试。",
+    "RATE_LIMITED": "操作过于频繁，请稍后再试。",
+    "SERVICE_UNAVAILABLE": "服务暂时不可用，请稍后再试。",
+    "USER_NOT_FOUND": "用户不存在。",
+    "TITLE_NOT_HELD": "你还没有获得这个称号。",
+    "TITLE_INVALID": "称号信息无效。",
+    "TITLE_NOT_FOUND": "称号不存在。",
+    "GRANT_NOT_FOUND": "该用户没有这个称号。",
+    "FORBIDDEN": "需要管理员权限。",
+    "QUERY_INVALID": "查询参数无效。"
+  }
+}

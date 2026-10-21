@@ -1,0 +1,174 @@
+{
+  "common": {
+    "siteTitle": "OurTaiko · Profile",
+    "close": "閉じる"
+  },
+  "messages": {
+    "changeColorTheme": "テーマを変更",
+    "light": "ライト",
+    "dark": "ダーク",
+    "system": "システム",
+    "pageNotFound": "ページが見つかりません",
+    "backHome": "ホームに戻る"
+  },
+  "nav": {
+    "main": "メインナビゲーション",
+    "myPage": "マイページ",
+    "titles": "称号一覧",
+    "admin": "管理",
+    "connecting": "接続中…",
+    "accountCenter": "アカウントセンター",
+    "signOut": "ログアウト",
+    "signIn": "ログイン"
+  },
+  "home": {
+    "heading": "あなたの太鼓の記録を、ひとつのページに",
+    "lead": "OurTaiko アカウントでログインすると、Fanmade と Database のスコアをまとめて確認し、称号や段位を集め、ゲームに表示するネームプレートを選べます。",
+    "register": "アカウント登録",
+    "signInFailed": "ログインが完了しませんでした。もう一度お試しください。",
+    "scoresTitle": "すべてのスコア",
+    "scoresText": "2 つのサーバーのスコアを 1 つの表に。譜面ごとのベストと、すべてのプレイ記録。",
+    "titlesTitle": "称号と段位",
+    "titlesText": "オンライン段位に合格すると段位バッジと称号を獲得。コミュニティ段位の称号は出典を表示します。",
+    "plateTitle": "ネームプレート",
+    "plateText": "着ける称号を選ぶと、ゲームの 1P・2P のネームプレートにも反映されます。"
+  },
+  "profile": {
+    "unknownPlayer": "プレイヤー",
+    "accountCenterDown": "アカウントセンターが応答していません。ニックネームとアイコンは後で表示されます。",
+    "sections": "ページの区分",
+    "tabs": {
+      "scores": "スコア",
+      "titles": "称号",
+      "dans": "段位"
+    }
+  },
+  "scores": {
+    "view": "表示",
+    "best": "ベストスコア",
+    "all": "プレイ記録",
+    "bestExplained": "譜面ごとに 1 行：最高スコアと、全プレイ中で最も良い王冠。譜面ファイルが差し替えられた場合は新しい版のスコアを優先します。",
+    "source": "サーバー",
+    "allSources": "すべてのサーバー",
+    "course": "難易度",
+    "allCourses": "すべての難易度",
+    "sort": "並び替え",
+    "sorts": {
+      "level": "★",
+      "score": "スコア",
+      "recent": "日時"
+    },
+    "sourceDown": "{{name}} が応答していません。ほかのサーバーのスコアを表示しています。",
+    "truncated": "{{name}} のスコアが多いため、新しい 2000 件のみ表示しています。",
+    "empty": "まだスコアがありません。",
+    "song": "曲",
+    "score": "スコア",
+    "judgements": "良 / 可 / 不可",
+    "maxCombo": "最大コンボ",
+    "plays": "プレイ回数",
+    "playedAt": "日時",
+    "oldVersion": "旧版",
+    "previous": "前のページ",
+    "next": "次のページ",
+    "crown": {
+      "title": "王冠",
+      "clear": "クリア",
+      "fullCombo": "フルコンボ",
+      "allGood": "全良"
+    }
+  },
+  "courses": {
+    "Easy": "かんたん",
+    "Normal": "ふつう",
+    "Hard": "むずかしい",
+    "Oni": "おに",
+    "Edit": "裏"
+  },
+  "titles": {
+    "held": "獲得した称号",
+    "heldExplained": "オンライン段位などで獲得した称号です。",
+    "wearExplained": "称号を 1 つ選んで着けると、ゲームとサイトのネームプレートに表示されます。",
+    "showDan": "ネームプレートに最高段位を表示する",
+    "none": "まだ称号がありません。",
+    "official": "公式",
+    "community": "コミュニティ",
+    "byAdmin": "管理者が付与",
+    "wear": "着ける",
+    "takeOff": "外す",
+    "catalogLink": "すべての称号を見る",
+    "catalog": "称号一覧",
+    "catalogExplained": "獲得できるすべての称号と、ネームプレートでの見た目です。",
+    "catalogEmpty": "まだ称号がありません。"
+  },
+  "dans": {
+    "badges": "段位バッジ",
+    "badgesExplained": "公式オンライン段位に合格すると獲得。赤は赤合格、金は金合格で、下がることはありません。",
+    "notYet": "未獲得",
+    "history": "挑戦履歴",
+    "noHistory": "まだオンライン段位に挑戦していません。",
+    "course": "段位",
+    "result": "結果",
+    "date": "日付",
+    "verdict": {
+      "failed": "不合格",
+      "red": "赤合格",
+      "redFullCombo": "赤合格・フルコンボ",
+      "redAllGood": "赤合格・全良",
+      "gold": "金合格",
+      "goldFullCombo": "金合格・フルコンボ",
+      "goldAllGood": "金合格・全良"
+    }
+  },
+  "admin": {
+    "editTitle": "称号を作成・変更",
+    "editTitleExplained": "ID は小文字・数字・ハイフンのみで、変更できません。既存の ID で保存すると変更になります。",
+    "id": "ID",
+    "name": "名前",
+    "nameIn": "名前（{{language}}）",
+    "description": "説明",
+    "style": "スタイル",
+    "official": "公式称号（コミュニティ段位では付与不可）",
+    "save": "保存",
+    "saved": "保存しました。",
+    "catalog": "すべての称号",
+    "edit": "変更",
+    "delete": "削除",
+    "confirmDelete": "称号 {{id}} を削除しますか？獲得済みのプレイヤーからも消えます。",
+    "deleted": "削除しました。",
+    "grant": "称号を手動で付与",
+    "grantExplained": "イベントやテスト用です。ユーザー ID はアカウントセンターの 32 文字の ID です。",
+    "userId": "ユーザー ID",
+    "title": "称号",
+    "grantButton": "付与",
+    "revokeButton": "取り消す",
+    "granted": "付与しました。",
+    "revoked": "取り消しました。",
+    "styles": {
+      "wood": "木目",
+      "teal": "青緑",
+      "wood2": "明るい木目",
+      "purple": "紫",
+      "gold": "金",
+      "rainbow": "虹"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "ja": "日本語",
+    "ko": "한국어"
+  },
+  "errors": {
+    "unexpected": "サーバーから予期しない応答がありました（{{status}}）。しばらくしてからお試しください。",
+    "UNAUTHORIZED": "ログインしてください。",
+    "CSRF_INVALID": "セッションが更新されました。ページを再読み込みしてください。",
+    "RATE_LIMITED": "操作が多すぎます。しばらくお待ちください。",
+    "SERVICE_UNAVAILABLE": "サービスを利用できません。しばらくしてからお試しください。",
+    "USER_NOT_FOUND": "ユーザーが見つかりません。",
+    "TITLE_NOT_HELD": "この称号はまだ獲得していません。",
+    "TITLE_INVALID": "称号の内容が正しくありません。",
+    "TITLE_NOT_FOUND": "称号が見つかりません。",
+    "GRANT_NOT_FOUND": "このユーザーはその称号を持っていません。",
+    "FORBIDDEN": "管理者のみ操作できます。",
+    "QUERY_INVALID": "検索条件が正しくありません。"
+  }
+}

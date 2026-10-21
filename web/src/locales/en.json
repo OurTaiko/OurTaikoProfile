@@ -1,0 +1,174 @@
+{
+  "common": {
+    "siteTitle": "OurTaiko · Profile",
+    "close": "Close"
+  },
+  "messages": {
+    "changeColorTheme": "Change color theme",
+    "light": "Light",
+    "dark": "Dark",
+    "system": "System",
+    "pageNotFound": "Page not found",
+    "backHome": "Back to home"
+  },
+  "nav": {
+    "main": "Main navigation",
+    "myPage": "My page",
+    "titles": "Titles",
+    "admin": "Admin",
+    "connecting": "Connecting…",
+    "accountCenter": "Account center",
+    "signOut": "Sign out",
+    "signIn": "Sign in"
+  },
+  "home": {
+    "heading": "Your whole taiko journey on one page",
+    "lead": "Sign in with your OurTaiko account to see every score you set on Fanmade and Database, collect titles and dan ranks, and choose the nameplate the game shows.",
+    "register": "Create an account",
+    "signInFailed": "Signing in did not finish. Please try again.",
+    "scoresTitle": "All your scores",
+    "scoresText": "Both servers in one table: your best on each chart and every play.",
+    "titlesTitle": "Titles and dan ranks",
+    "titlesText": "Pass online dan courses for dan badges and titles; titles from community courses say so.",
+    "plateTitle": "Nameplate",
+    "plateText": "Pick the title you wear and the 1P and 2P plates in the game follow."
+  },
+  "profile": {
+    "unknownPlayer": "Player",
+    "accountCenterDown": "The account center is not answering; the nickname and avatar will show later.",
+    "sections": "Profile sections",
+    "tabs": {
+      "scores": "Scores",
+      "titles": "Titles",
+      "dans": "Dan"
+    }
+  },
+  "scores": {
+    "view": "View",
+    "best": "Best scores",
+    "all": "All plays",
+    "bestExplained": "One row per chart: the highest score, and the best crown of all plays. When a chart's files were replaced, scores on the new version come first.",
+    "source": "Server",
+    "allSources": "All servers",
+    "course": "Course",
+    "allCourses": "All courses",
+    "sort": "Sort",
+    "sorts": {
+      "level": "Level",
+      "score": "Score",
+      "recent": "Date"
+    },
+    "sourceDown": "{{name}} is not answering; showing the other servers for now.",
+    "truncated": "{{name}} has too many scores; showing the latest 2000.",
+    "empty": "No scores yet.",
+    "song": "Song",
+    "score": "Score",
+    "judgements": "Good / OK / Bad",
+    "maxCombo": "Max combo",
+    "plays": "Plays",
+    "playedAt": "Date",
+    "oldVersion": "Old version",
+    "previous": "Previous page",
+    "next": "Next page",
+    "crown": {
+      "title": "Crown",
+      "clear": "Clear",
+      "fullCombo": "Full combo",
+      "allGood": "All good"
+    }
+  },
+  "courses": {
+    "Easy": "Easy",
+    "Normal": "Normal",
+    "Hard": "Hard",
+    "Oni": "Oni",
+    "Edit": "Ura Oni"
+  },
+  "titles": {
+    "held": "Titles earned",
+    "heldExplained": "Titles earned from online dan courses and more.",
+    "wearExplained": "Wear one of your titles; your nameplate in the game and on the websites shows it.",
+    "showDan": "Show my highest dan rank on the nameplate",
+    "none": "No titles yet.",
+    "official": "Official",
+    "community": "Community",
+    "byAdmin": "Granted by an admin",
+    "wear": "Wear",
+    "takeOff": "Take off",
+    "catalogLink": "See every title",
+    "catalog": "Title catalog",
+    "catalogExplained": "Every title there is to earn, as it looks on a nameplate.",
+    "catalogEmpty": "No titles yet."
+  },
+  "dans": {
+    "badges": "Dan badges",
+    "badgesExplained": "Earned by passing official online dan courses: red for a red pass, gold for a gold pass. A badge only goes up.",
+    "notYet": "Not yet",
+    "history": "Attempts",
+    "noHistory": "No online dan attempts yet.",
+    "course": "Course",
+    "result": "Result",
+    "date": "Date",
+    "verdict": {
+      "failed": "Failed",
+      "red": "Red pass",
+      "redFullCombo": "Red pass · Full combo",
+      "redAllGood": "Red pass · All good",
+      "gold": "Gold pass",
+      "goldFullCombo": "Gold pass · Full combo",
+      "goldAllGood": "Gold pass · All good"
+    }
+  },
+  "admin": {
+    "editTitle": "Create or change a title",
+    "editTitleExplained": "IDs use lowercase letters, digits and hyphens and cannot change. Saving an existing ID changes that title.",
+    "id": "ID",
+    "name": "Name",
+    "nameIn": "Name ({{language}})",
+    "description": "Description",
+    "style": "Style",
+    "official": "Official title (community courses cannot give it)",
+    "save": "Save",
+    "saved": "Saved.",
+    "catalog": "All titles",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Delete the title {{id}}? Players who hold it lose it too.",
+    "deleted": "Deleted.",
+    "grant": "Grant a title by hand",
+    "grantExplained": "For events and tests. The user ID is the account center's 32-character ID.",
+    "userId": "User ID",
+    "title": "Title",
+    "grantButton": "Grant",
+    "revokeButton": "Take back",
+    "granted": "Granted.",
+    "revoked": "Taken back.",
+    "styles": {
+      "wood": "Wood",
+      "teal": "Teal",
+      "wood2": "Light wood",
+      "purple": "Purple",
+      "gold": "Gold",
+      "rainbow": "Rainbow"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "ja": "日本語",
+    "ko": "한국어"
+  },
+  "errors": {
+    "unexpected": "The server answered unexpectedly ({{status}}). Please try again later.",
+    "UNAUTHORIZED": "Please sign in first.",
+    "CSRF_INVALID": "Your session changed. Reload the page and try again.",
+    "RATE_LIMITED": "Too many requests. Please wait a moment.",
+    "SERVICE_UNAVAILABLE": "The service is unavailable. Please try again later.",
+    "USER_NOT_FOUND": "No such user.",
+    "TITLE_NOT_HELD": "You have not earned this title yet.",
+    "TITLE_INVALID": "The title is not valid.",
+    "TITLE_NOT_FOUND": "No such title.",
+    "GRANT_NOT_FOUND": "This user does not hold that title.",
+    "FORBIDDEN": "Administrators only.",
+    "QUERY_INVALID": "Invalid query."
+  }
+}

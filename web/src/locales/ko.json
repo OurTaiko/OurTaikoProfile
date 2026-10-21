@@ -1,0 +1,174 @@
+{
+  "common": {
+    "siteTitle": "OurTaiko · Profile",
+    "close": "닫기"
+  },
+  "messages": {
+    "changeColorTheme": "색상 테마 변경",
+    "light": "라이트",
+    "dark": "다크",
+    "system": "시스템",
+    "pageNotFound": "페이지를 찾을 수 없습니다",
+    "backHome": "홈으로"
+  },
+  "nav": {
+    "main": "주 내비게이션",
+    "myPage": "내 페이지",
+    "titles": "칭호 목록",
+    "admin": "관리",
+    "connecting": "연결 중…",
+    "accountCenter": "계정 센터",
+    "signOut": "로그아웃",
+    "signIn": "로그인"
+  },
+  "home": {
+    "heading": "나의 태고 기록을 한 페이지에",
+    "lead": "OurTaiko 계정으로 로그인하면 Fanmade와 Database의 모든 점수를 보고, 칭호와 단위를 모으고, 게임에 표시할 네임플레이트를 고를 수 있습니다.",
+    "register": "계정 만들기",
+    "signInFailed": "로그인을 완료하지 못했습니다. 다시 시도해 주세요.",
+    "scoresTitle": "모든 점수",
+    "scoresText": "두 서버의 점수를 한 표에: 보면별 최고 점수와 모든 플레이 기록.",
+    "titlesTitle": "칭호와 단위",
+    "titlesText": "온라인 단위에 합격하면 단위 배지와 칭호를 얻습니다. 커뮤니티 단위의 칭호는 출처를 표시합니다.",
+    "plateTitle": "네임플레이트",
+    "plateText": "착용할 칭호를 고르면 게임의 1P·2P 네임플레이트도 바뀝니다."
+  },
+  "profile": {
+    "unknownPlayer": "플레이어",
+    "accountCenterDown": "계정 센터가 응답하지 않습니다. 닉네임과 아바타는 나중에 표시됩니다.",
+    "sections": "페이지 구역",
+    "tabs": {
+      "scores": "점수",
+      "titles": "칭호",
+      "dans": "단위"
+    }
+  },
+  "scores": {
+    "view": "보기",
+    "best": "최고 점수",
+    "all": "플레이 기록",
+    "bestExplained": "보면마다 한 줄: 가장 높은 점수와 모든 플레이 중 가장 좋은 왕관. 보면 파일이 교체되면 새 버전의 점수를 먼저 표시합니다.",
+    "source": "서버",
+    "allSources": "모든 서버",
+    "course": "난이도",
+    "allCourses": "모든 난이도",
+    "sort": "정렬",
+    "sorts": {
+      "level": "레벨",
+      "score": "점수",
+      "recent": "날짜"
+    },
+    "sourceDown": "{{name}}이(가) 응답하지 않아 다른 서버의 점수만 표시합니다.",
+    "truncated": "{{name}}의 점수가 많아 최근 2000개만 표시합니다.",
+    "empty": "아직 점수가 없습니다.",
+    "song": "곡",
+    "score": "점수",
+    "judgements": "양 / 가 / 불가",
+    "maxCombo": "최대 콤보",
+    "plays": "플레이 횟수",
+    "playedAt": "날짜",
+    "oldVersion": "이전 버전",
+    "previous": "이전 페이지",
+    "next": "다음 페이지",
+    "crown": {
+      "title": "왕관",
+      "clear": "클리어",
+      "fullCombo": "풀콤보",
+      "allGood": "전량"
+    }
+  },
+  "courses": {
+    "Easy": "쉬움",
+    "Normal": "보통",
+    "Hard": "어려움",
+    "Oni": "오니",
+    "Edit": "우라"
+  },
+  "titles": {
+    "held": "획득한 칭호",
+    "heldExplained": "온라인 단위 등으로 획득한 칭호입니다.",
+    "wearExplained": "칭호 하나를 착용하면 게임과 웹사이트의 네임플레이트에 표시됩니다.",
+    "showDan": "네임플레이트에 최고 단위 표시",
+    "none": "아직 칭호가 없습니다.",
+    "official": "공식",
+    "community": "커뮤니티",
+    "byAdmin": "관리자 지급",
+    "wear": "착용",
+    "takeOff": "해제",
+    "catalogLink": "모든 칭호 보기",
+    "catalog": "칭호 목록",
+    "catalogExplained": "획득할 수 있는 모든 칭호와 네임플레이트에서의 모습입니다.",
+    "catalogEmpty": "아직 칭호가 없습니다."
+  },
+  "dans": {
+    "badges": "단위 배지",
+    "badgesExplained": "공식 온라인 단위에 합격하면 획득합니다. 빨강은 적합격, 금색은 금합격이며 내려가지 않습니다.",
+    "notYet": "미획득",
+    "history": "도전 기록",
+    "noHistory": "아직 온라인 단위 도전이 없습니다.",
+    "course": "단위",
+    "result": "결과",
+    "date": "날짜",
+    "verdict": {
+      "failed": "불합격",
+      "red": "적합격",
+      "redFullCombo": "적합격 · 풀콤보",
+      "redAllGood": "적합격 · 전량",
+      "gold": "금합격",
+      "goldFullCombo": "금합격 · 풀콤보",
+      "goldAllGood": "금합격 · 전량"
+    }
+  },
+  "admin": {
+    "editTitle": "칭호 만들기·수정",
+    "editTitleExplained": "ID는 소문자, 숫자, 하이픈만 쓸 수 있으며 바꿀 수 없습니다. 기존 ID로 저장하면 수정됩니다.",
+    "id": "ID",
+    "name": "이름",
+    "nameIn": "이름 ({{language}})",
+    "description": "설명",
+    "style": "스타일",
+    "official": "공식 칭호 (커뮤니티 단위는 지급 불가)",
+    "save": "저장",
+    "saved": "저장했습니다.",
+    "catalog": "모든 칭호",
+    "edit": "수정",
+    "delete": "삭제",
+    "confirmDelete": "칭호 {{id}}을(를) 삭제할까요? 보유한 플레이어에게서도 사라집니다.",
+    "deleted": "삭제했습니다.",
+    "grant": "칭호 수동 지급",
+    "grantExplained": "이벤트나 테스트용입니다. 사용자 ID는 계정 센터의 32자리 ID입니다.",
+    "userId": "사용자 ID",
+    "title": "칭호",
+    "grantButton": "지급",
+    "revokeButton": "회수",
+    "granted": "지급했습니다.",
+    "revoked": "회수했습니다.",
+    "styles": {
+      "wood": "나뭇결",
+      "teal": "청록",
+      "wood2": "밝은 나뭇결",
+      "purple": "보라",
+      "gold": "금색",
+      "rainbow": "무지개"
+    }
+  },
+  "languages": {
+    "en": "English",
+    "ja": "日本語",
+    "ko": "한국어"
+  },
+  "errors": {
+    "unexpected": "서버가 예기치 않게 응답했습니다 ({{status}}). 잠시 후 다시 시도해 주세요.",
+    "UNAUTHORIZED": "먼저 로그인해 주세요.",
+    "CSRF_INVALID": "세션이 바뀌었습니다. 페이지를 새로 고침하고 다시 시도해 주세요.",
+    "RATE_LIMITED": "요청이 너무 많습니다. 잠시 기다려 주세요.",
+    "SERVICE_UNAVAILABLE": "서비스를 사용할 수 없습니다. 잠시 후 다시 시도해 주세요.",
+    "USER_NOT_FOUND": "사용자를 찾을 수 없습니다.",
+    "TITLE_NOT_HELD": "아직 이 칭호를 얻지 않았습니다.",
+    "TITLE_INVALID": "칭호 정보가 올바르지 않습니다.",
+    "TITLE_NOT_FOUND": "칭호를 찾을 수 없습니다.",
+    "GRANT_NOT_FOUND": "이 사용자는 그 칭호가 없습니다.",
+    "FORBIDDEN": "관리자만 가능합니다.",
+    "QUERY_INVALID": "조회 조건이 올바르지 않습니다."
+  }
+}
