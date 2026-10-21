@@ -107,6 +107,7 @@ func (s *Server) Handler() http.Handler {
 	mux.HandleFunc("GET /api/v1/titles", s.titleCatalog)
 	mux.HandleFunc("GET /api/v1/users/{id}", s.userProfile)
 	mux.HandleFunc("GET /api/v1/users/{id}/nameplate", s.userNameplate)
+	mux.HandleFunc("GET /api/v1/nameplates", s.nameplates)
 	mux.HandleFunc("GET /api/v1/users/{id}/scores", s.userScores)
 	mux.HandleFunc("GET /api/v1/users/{id}/titles", s.userTitles)
 	mux.HandleFunc("GET /api/v1/users/{id}/dans", s.userDans)

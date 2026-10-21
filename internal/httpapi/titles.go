@@ -113,6 +113,7 @@ func (s *Server) nameplate(ctx context.Context, db queryer, id string) (Nameplat
 // userNameplate is GET /api/v1/users/{id}/nameplate, public: the game reads it for each
 // signed-in seat. Nickname and avatar are empty while the account center does not answer.
 func (s *Server) userNameplate(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	id := r.PathValue("id")
 	if !validSubject(id) {
 		problem(w, 404, "USER_NOT_FOUND", "用户不存在")
@@ -126,6 +127,33 @@ func (s *Server) userNameplate(w http.ResponseWriter, r *http.Request) {
 	p, _, _ := s.profile(r.Context(), id)
 	plate.Nickname, plate.AvatarURL = p.Nickname, p.AvatarURL
 	respond(w, 200, plate)
+}
+
+// nameplates is GET /api/v1/nameplates?ids=a,b,…: up to 100 players' titles and 段位 at once,
+// for the other OurTaiko websites to draw next to the names they show (their own nicknames; this
+// asks the account center nothing). Readable from any website.
+func (s *Server) nameplates(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
+	ids := strings.Split(r.URL.Query().Get("ids"), ",")
+	seen := map[string]bool{}
+	plates := map[string]Nameplate{}
+	for _, id := range ids {
+		if id == "" || seen[id] {
+			continue
+		}
+		seen[id] = true
+		if !validSubject(id) || len(seen) > 100 {
+			problem(w, 400, "QUERY_INVALID", "需要至多 100 个用户 ID")
+			return
+		}
+		plate, err := s.nameplate(r.Context(), s.DB, id)
+		if err != nil {
+			internal(w, err)
+			return
+		}
+		plates[id] = plate
+	}
+	respond(w, 200, map[string]any{"nameplates": plates})
 }
 
 // userProfile is GET /api/v1/users/{id}: who the player is, their nameplate and the services

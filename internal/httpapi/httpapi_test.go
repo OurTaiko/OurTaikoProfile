@@ -213,6 +213,13 @@ func TestAwardsTitlesAndNameplates(t *testing.T) {
 	if plate.Title == nil || plate.Title.ID != "kidou" || !plate.Dan.Gold || plate.Dan.Index != 20 || plate.Nickname != "本地开发用户" {
 		t.Fatal("public plate", plate)
 	}
+	var batch struct{ Nameplates map[string]Nameplate }
+	w := public.do("GET", "/api/v1/nameplates?ids="+player+","+other+","+player, "", nil)
+	if w.Code != 200 || w.Header().Get("Access-Control-Allow-Origin") != "*" || json.Unmarshal(w.Body.Bytes(), &batch) != nil ||
+		len(batch.Nameplates) != 2 || batch.Nameplates[player].Title.ID != "kidou" || batch.Nameplates[other].Title != nil {
+		t.Fatal("batch plates", w.Code, w.Body.String())
+	}
+	public.json("GET", "/api/v1/nameplates?ids=nope", "", 400, nil)
 	c.json("PUT", "/api/v1/me/nameplate", `{"titleId":null,"showDan":false}`, 200, &worn)
 	public.json("GET", "/api/v1/users/"+player+"/nameplate", "", 200, &plate)
 	if plate.Title != nil || plate.Dan != nil || plate.ShowDan {
