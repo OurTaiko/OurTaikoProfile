@@ -1,38 +1,19 @@
-# OurTaikoProfile on ourtaiko-prod: PostgreSQL and the server (API and website in one).
+# OurTaikoProfile on ourtaiko-prod, beside Fanmade and the SSO: the server (API and website in
+# one) joins their network and keeps its database (ourtaiko_profile, owned by the role
+# ourtaiko_profile) in their PostgreSQL, the container ourtaiko-postgres.
 # Layout on the server:
 #   /opt/ourtaiko-profile/src            this repository
-#   /etc/ourtaiko-profile/postgres.env   POSTGRES_PASSWORD (root-only)
 #   /etc/ourtaiko-profile/api.env        see api.env.example (root-only)
+# The image is usually built on a build machine (docker buildx --platform linux/amd64) and
+# loaded there, then started with up -d --no-build; building on the server also works.
 # The 1Panel site profile.ourtaiko.org proxies HTTPS to 127.0.0.1:8093.
 name: ourtaiko-profile
 services:
-  postgres:
-    image: postgres:18-alpine
-    container_name: ourtaiko-profile-postgres
-    restart: unless-stopped
-    env_file:
-      - path: /etc/ourtaiko-profile/postgres.env
-        format: raw
-    environment:
-      POSTGRES_DB: ourtaiko_profile
-      POSTGRES_USER: ourtaiko_profile
-      POSTGRES_INITDB_ARGS: --encoding=UTF8 --locale=C.UTF-8
-    volumes: ['postgres:/var/lib/postgresql']
-    healthcheck:
-      test: ['CMD', 'pg_isready', '-U', 'ourtaiko_profile', '-d', 'ourtaiko_profile']
-      interval: 5s
-      timeout: 5s
-      retries: 20
-    logging: &logging
-      driver: json-file
-      options: {max-size: 10m, max-file: '3'}
   app:
     image: ourtaiko-profile:release
     build: ..
     container_name: ourtaiko-profile
     restart: unless-stopped
-    depends_on:
-      postgres: {condition: service_healthy}
     env_file:
       - path: /etc/ourtaiko-profile/api.env
         format: raw
@@ -48,6 +29,9 @@ services:
       timeout: 5s
       retries: 20
       start_period: 20s
-    logging: *logging
-volumes:
-  postgres:
+    networks: [shared]
+    logging:
+      driver: json-file
+      options: {max-size: 10m, max-file: '3'}
+networks:
+  shared: {external: true, name: ourtaiko-shared}
