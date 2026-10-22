@@ -183,8 +183,8 @@ func TestAwardsTitlesAndNameplates(t *testing.T) {
 	}
 	var gold reply
 	award(`{"key":"attempt-3","userId":"`+player+`","official":true,"verdict":5,"dan":20}`, 200, &gold, auth)
-	if !gold.Granted.Dan.Upgraded || !gold.Nameplate.Dan.Gold {
-		t.Fatalf("gold %+v", gold)
+	if !gold.Granted.Dan.Upgraded || !gold.Nameplate.Dan.Gold || gold.Nameplate.Dan.Combo != 1 {
+		t.Fatalf("gold full combo %+v", gold)
 	}
 	var failed reply
 	award(`{"key":"attempt-4","userId":"`+player+`","official":true,"verdict":0,"dan":24,"titles":["kidou"]}`, 200, &failed, auth)
@@ -197,7 +197,8 @@ func TestAwardsTitlesAndNameplates(t *testing.T) {
 	if len(skipped.Granted.Titles) != 0 || len(skipped.Granted.Skipped) != 2 || skipped.Granted.Skipped[0] != (SkippedTitle{"kidou", "official_only"}) || skipped.Granted.Skipped[1] != (SkippedTitle{"missing", "not_found"}) {
 		t.Fatalf("skipped %+v", skipped.Granted)
 	}
-	award(`{"key":"attempt-6","userId":"`+player+`","official":false,"verdict":3,"dan":3}`, 422, nil, auth)
+	award(`{"key":"attempt-6","userId":"`+player+`","official":false,"verdict":3,"dan":8}`, 422, nil, auth)
+	award(`{"key":"attempt-6b","userId":"`+player+`","official":true,"verdict":3,"dan":5}`, 422, nil, auth)
 	var partly reply
 	award(`{"key":"attempt-7","userId":"`+player+`","official":true,"verdict":4,"dan":21,"titles":["missing","kidou"]}`, 200, &partly, auth)
 	if partly.Granted.Dan == nil || !partly.Granted.Dan.Upgraded || len(partly.Granted.Titles) != 1 || partly.Granted.Titles[0].ID != "kidou" || len(partly.Granted.Skipped) != 1 {

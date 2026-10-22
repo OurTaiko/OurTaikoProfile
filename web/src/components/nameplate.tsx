@@ -1,6 +1,6 @@
 import { useTranslation } from 'react-i18next'
 import type { Nameplate as Plate, TitleStyle } from '@/api/types'
-import { danName, titleName } from '@/dan'
+import { danName, danRings, danText, titleName } from '@/dan'
 import { cn } from '@/lib/utils'
 
 // The title bands of the game's nameplate (frame_top 0–4 and the rainbow band).
@@ -31,10 +31,9 @@ export function Nameplate({ plate, className }: { plate: Plate; className?: stri
         <div className="flex w-20 shrink-0 items-center justify-center">
           <div
             className={cn(
-              'flex size-16 items-center justify-center rounded-full border-4 text-lg font-black tracking-tight text-white shadow-inner',
-              plate.dan.gold
-                ? 'border-amber-200 bg-linear-to-b from-amber-400 to-amber-600'
-                : 'border-red-200 bg-linear-to-b from-red-500 to-red-700',
+              'flex h-10 w-[4.5rem] items-center justify-center text-lg font-black tracking-tight',
+              danRings[plate.dan.combo] ?? danRings[0],
+              danText(plate.dan.gold),
             )}
             title={danName(plate.dan.index)}
           >

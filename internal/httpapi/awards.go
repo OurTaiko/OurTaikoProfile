@@ -81,7 +81,7 @@ type Granted struct {
 
 // award is POST /internal/v1/awards, for services that ran a 段位 course: the attempt (key,
 // unique per service), the player, the course and its maker, whether it is official, the
-// verdict (0 failed, 1–3 red, 4–6 gold), the 段位 the course stands for (official courses only)
+// verdict (0 failed, 1–3 red, 4–6 gold), the 段位 the course stands for (official courses only; 五級 6 .. 達人 24)
 // and the titles it gives on a pass. A failed attempt is recorded and gives nothing. A badge
 // only goes up. A title the course may not give is skipped and the rest are given: official
 // titles come from official courses only, and a player's community title from that player's
@@ -107,7 +107,7 @@ func (s *Server) award(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 	if len(body.Key) < 1 || len(body.Key) > 100 || !validSubject(body.UserID) || len(body.CourseID) > 100 || len(body.CourseTitle) > 200 || (body.CourseOwner != "" && !validSubject(body.CourseOwner)) ||
-		body.Verdict < 0 || body.Verdict > 6 || (body.Dan != nil && (*body.Dan < 0 || *body.Dan > 24)) || len(body.Titles) > 10 || (body.Dan != nil && !body.Official) {
+		body.Verdict < 0 || body.Verdict > 6 || (body.Dan != nil && (*body.Dan < danFirst || *body.Dan > 24)) || len(body.Titles) > 10 || (body.Dan != nil && !body.Official) {
 		problem(w, 422, "AWARD_INVALID", "奖励请求无效")
 		return
 	}

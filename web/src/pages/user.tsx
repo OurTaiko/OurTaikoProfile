@@ -34,7 +34,7 @@ import {
 } from '@/components/ui/table'
 import { Notice } from '@/notice'
 import { useSession } from '@/session-context'
-import { danName, danNames, titleName, verdictKey } from '@/dan'
+import { danName, danRings, danText, offeredDans, titleName, verdictKey } from '@/dan'
 import { formatLocale } from '@/i18n'
 import { cn } from '@/lib/utils'
 
@@ -485,21 +485,18 @@ function DansTab({ id }: { id: string }) {
           <CardDescription>{t('dans.badgesExplained')}</CardDescription>
         </CardHeader>
         <CardContent>
-          <ol className="grid grid-cols-5 gap-2 sm:grid-cols-9 lg:grid-cols-13">
-            {danNames.map((name, index) => {
+          <ol className="grid grid-cols-5 gap-2 sm:grid-cols-7 lg:grid-cols-10">
+            {offeredDans.map(({ name, index }) => {
               const badge = byIndex.get(index)
               return (
                 <li
                   key={name}
                   title={badge ? t(verdictKey(badge.verdict)) : t('dans.notYet')}
                   className={cn(
-                    'flex aspect-square items-center justify-center rounded-full border-2 text-xs font-bold',
-                    !badge && 'border-dashed text-muted-foreground/60',
-                    badge &&
-                      !badge.gold &&
-                      'border-red-200 bg-linear-to-b from-red-500 to-red-700 text-white',
-                    badge?.gold &&
-                      'border-amber-200 bg-linear-to-b from-amber-400 to-amber-600 text-white',
+                    'flex h-10 items-center justify-center text-sm font-bold',
+                    !badge && 'rounded-[50%] border-2 border-dashed text-muted-foreground/60',
+                    badge && danRings[badge.combo],
+                    badge && danText(badge.gold),
                   )}
                 >
                   {name}

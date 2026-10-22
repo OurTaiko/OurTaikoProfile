@@ -19,7 +19,15 @@ export type Title = {
   // The player who made it; null for the titles administrators keep.
   ownerId: string | null
 }
-export type DanBadge = { index: number; verdict: number; gold: boolean; achievedAt: string }
+// gold colours the emblem's text (verdict 4–6); combo picks its ring like a song's crown:
+// 0 silver, 1 gold (full combo), 2 rainbow (all good).
+export type DanBadge = {
+  index: number
+  verdict: number
+  gold: boolean
+  combo: 0 | 1 | 2
+  achievedAt: string
+}
 export type Nameplate = {
   userId: string
   nickname: string

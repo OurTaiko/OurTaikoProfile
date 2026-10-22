@@ -25,12 +25,25 @@ type Title struct {
 	OwnerID          *string         `json:"ownerId"`
 }
 
-// DanBadge is a player's best result of one 段位 (0 初級 .. 24 達人); verdict 4–6 is gold.
+// DanBadge is a player's best result of one 段位 (五級 6 .. 24 達人; 0–5 are not offered). The
+// emblem has two layers, like a song's crown: Gold (verdict 4–6) colours the text, Combo picks
+// the ring: 0 銀粋, 1 金粋 (full combo), 2 虹粋 (all 良).
 type DanBadge struct {
 	Index      int       `json:"index"`
 	Verdict    int       `json:"verdict"`
 	Gold       bool      `json:"gold"`
+	Combo      int       `json:"combo"`
 	AchievedAt time.Time `json:"achievedAt"`
+}
+
+// The first 段位 the game offers (五級); lower indexes exist in the numbering only.
+const danFirst = 6
+
+func (d *DanBadge) tiers() {
+	d.Gold = d.Verdict >= 4
+	if d.Verdict >= 1 && d.Verdict <= 6 {
+		d.Combo = (d.Verdict - 1) % 3
+	}
 }
 
 // Nameplate is what a player wears, as the game and the websites draw it.
@@ -109,7 +122,7 @@ func (s *Server) nameplate(ctx context.Context, db queryer, id string) (Nameplat
 		var d DanBadge
 		err = db.QueryRow(ctx, `SELECT dan,verdict,achieved_at FROM user_dans WHERE user_id=$1 ORDER BY dan DESC LIMIT 1`, id).Scan(&d.Index, &d.Verdict, &d.AchievedAt)
 		if err == nil {
-			d.Gold = d.Verdict >= 4
+			d.tiers()
 			plate.Dan = &d
 		} else if !errors.Is(err, pgx.ErrNoRows) {
 			return plate, err
@@ -285,7 +298,7 @@ func (s *Server) userDans(w http.ResponseWriter, r *http.Request) {
 			internal(w, err)
 			return
 		}
-		d.Gold = d.Verdict >= 4
+		d.tiers()
 		badges = append(badges, d)
 	}
 	rows.Close()

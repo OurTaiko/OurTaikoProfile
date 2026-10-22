@@ -1,3 +1,7 @@
+import ringSilver from './assets/dan-ring-silver.png'
+import ringGold from './assets/dan-ring-gold.png'
+import ringRainbow from './assets/dan-ring-rainbow.png'
+
 // The 25 段位 the game and Profile number 0 初級 .. 24 達人 (DanCourse.DanIndex). Their
 // names stay Japanese in every language, as in the game.
 export const danNames = [
@@ -29,6 +33,23 @@ export const danNames = [
 ] as const
 
 export const danName = (index: number) => danNames[index] ?? '—'
+// The game offers 五級 (6) .. 達人 (24); 0–5 exist in the numbering only.
+export const danFirst = 6
+export const offeredDans = danNames
+  .map((name, index) => ({ name, index }))
+  .filter((d) => d.index >= danFirst)
+
+// The emblem's ring by the pass's combo (DanBadge.combo): the game's 銀粋 / 金粋 / 虹粋 art
+// (72x40 cells), drawn under the rank's name; its text by the pass line.
+export const danRings = {
+  0: `bg-[url(${ringSilver})] bg-contain bg-center bg-no-repeat`,
+  1: `bg-[url(${ringGold})] bg-contain bg-center bg-no-repeat`,
+  2: `bg-[url(${ringRainbow})] bg-contain bg-center bg-no-repeat`,
+} as const
+export const danText = (gold: boolean) =>
+  gold
+    ? 'text-[#ffd84a] [-webkit-text-stroke:0.5px_#5a3d00] [text-shadow:0_1px_1px_rgb(0_0_0/0.7)]'
+    : 'text-white [-webkit-text-stroke:0.5px_#222] [text-shadow:0_1px_1px_rgb(0_0_0/0.7)]'
 
 // verdict 1–3 red pass, 4–6 gold; within each, plain, full combo, all good.
 const verdictKeys = [
