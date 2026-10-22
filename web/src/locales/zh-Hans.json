@@ -98,7 +98,24 @@
     "catalogLink": "查看全部称号",
     "catalog": "称号目录",
     "catalogExplained": "所有可以获得的称号，以及它们在名牌上的样子。",
-    "catalogEmpty": "还没有称号。"
+    "catalogEmpty": "还没有称号。",
+    "mine": "我的称号",
+    "mineExplained": "为你自己创建的段位制作称号，玩家通过段位后获得。社区称号最多 {{limit}} 个，被管理员设为官方后不再占用名额。社区称号只能用在你自己的段位里，官方称号只能由官方段位授予。",
+    "quota": "社区称号已用 {{used}} / {{limit}} 个",
+    "changeBand": "改颜色",
+    "edit": "修改",
+    "delete": "删除",
+    "confirmDelete": "删除称号「{{name}}」？已经获得它的玩家也会失去它。",
+    "deleted": "已删除。",
+    "saved": "已保存。",
+    "create": "新建称号",
+    "editing": "修改称号",
+    "officialBandOnly": "这个称号已被设为官方，你只能修改它的颜色。",
+    "limitReached": "社区称号已达 {{limit}} 个上限。删除一个，或请管理员把其中一个设为官方后再新建。",
+    "keptStyles": "彩虹和紫色留给官方称号。",
+    "save": "保存",
+    "createButton": "创建",
+    "cancel": "取消"
   },
   "dans": {
     "badges": "段位徽章",
@@ -150,7 +167,8 @@
       "purple": "紫色",
       "gold": "金色",
       "rainbow": "彩虹"
-    }
+    },
+    "madeBy": "创建者"
   },
   "languages": {
     "en": "English",
@@ -169,6 +187,9 @@
     "TITLE_NOT_FOUND": "称号不存在。",
     "GRANT_NOT_FOUND": "该用户没有这个称号。",
     "FORBIDDEN": "需要管理员权限。",
-    "QUERY_INVALID": "查询参数无效。"
+    "QUERY_INVALID": "查询参数无效。",
+    "TITLE_LIMIT_REACHED": "社区称号最多 5 个。",
+    "TITLE_OFFICIAL": "官方称号只有管理员可以删除。",
+    "TITLE_CHANGED": "这个称号刚被管理员修改过，请刷新页面后重试。"
   }
 }

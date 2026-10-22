@@ -98,7 +98,24 @@
     "catalogLink": "See every title",
     "catalog": "Title catalog",
     "catalogExplained": "Every title there is to earn, as it looks on a nameplate.",
-    "catalogEmpty": "No titles yet."
+    "catalogEmpty": "No titles yet.",
+    "mine": "My titles",
+    "mineExplained": "Make titles for the dan courses you create; players earn them by passing. You can keep up to {{limit}} community titles, and one an administrator makes official no longer counts. A community title can only be given by your own courses, and an official title only by official courses.",
+    "quota": "Community titles: {{used}} / {{limit}}",
+    "changeBand": "Change color",
+    "edit": "Edit",
+    "delete": "Delete",
+    "confirmDelete": "Delete the title “{{name}}”? Players who earned it lose it too.",
+    "deleted": "Deleted.",
+    "saved": "Saved.",
+    "create": "New title",
+    "editing": "Edit title",
+    "officialBandOnly": "This title is official now; you can only change its color.",
+    "limitReached": "You have reached the limit of {{limit}} community titles. Delete one, or ask an administrator to make one official, to create another.",
+    "keptStyles": "Rainbow and purple are kept for official titles.",
+    "save": "Save",
+    "createButton": "Create",
+    "cancel": "Cancel"
   },
   "dans": {
     "badges": "Dan badges",
@@ -150,7 +167,8 @@
       "purple": "Purple",
       "gold": "Gold",
       "rainbow": "Rainbow"
-    }
+    },
+    "madeBy": "Made by"
   },
   "languages": {
     "en": "English",
@@ -169,6 +187,9 @@
     "TITLE_NOT_FOUND": "No such title.",
     "GRANT_NOT_FOUND": "This user does not hold that title.",
     "FORBIDDEN": "Administrators only.",
-    "QUERY_INVALID": "Invalid query."
+    "QUERY_INVALID": "Invalid query.",
+    "TITLE_LIMIT_REACHED": "You can keep at most 5 community titles.",
+    "TITLE_OFFICIAL": "Only administrators can delete an official title.",
+    "TITLE_CHANGED": "An administrator just changed this title. Reload the page and try again."
   }
 }

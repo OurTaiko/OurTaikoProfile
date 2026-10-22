@@ -98,7 +98,24 @@
     "catalogLink": "すべての称号を見る",
     "catalog": "称号一覧",
     "catalogExplained": "獲得できるすべての称号と、ネームプレートでの見た目です。",
-    "catalogEmpty": "まだ称号がありません。"
+    "catalogEmpty": "まだ称号がありません。",
+    "mine": "自分の称号",
+    "mineExplained": "自分で作った段位のための称号を作れます。段位に合格したプレイヤーが獲得します。コミュニティ称号は {{limit}} 個まで作れ、管理者が公式にした称号は数に含まれません。コミュニティ称号は自分の段位でのみ、公式称号は公式段位でのみ授与されます。",
+    "quota": "コミュニティ称号：{{used}} / {{limit}}",
+    "changeBand": "色を変更",
+    "edit": "編集",
+    "delete": "削除",
+    "confirmDelete": "称号「{{name}}」を削除しますか？獲得済みのプレイヤーからも失われます。",
+    "deleted": "削除しました。",
+    "saved": "保存しました。",
+    "create": "新しい称号",
+    "editing": "称号を編集",
+    "officialBandOnly": "この称号は公式になりました。変更できるのは色だけです。",
+    "limitReached": "コミュニティ称号が上限の {{limit}} 個に達しています。新しく作るには、どれかを削除するか、管理者に公式にしてもらってください。",
+    "keptStyles": "虹色と紫は公式称号用です。",
+    "save": "保存",
+    "createButton": "作成",
+    "cancel": "キャンセル"
   },
   "dans": {
     "badges": "段位バッジ",
@@ -150,7 +167,8 @@
       "purple": "紫",
       "gold": "金",
       "rainbow": "虹"
-    }
+    },
+    "madeBy": "作成者"
   },
   "languages": {
     "en": "English",
@@ -169,6 +187,9 @@
     "TITLE_NOT_FOUND": "称号が見つかりません。",
     "GRANT_NOT_FOUND": "このユーザーはその称号を持っていません。",
     "FORBIDDEN": "管理者のみ操作できます。",
-    "QUERY_INVALID": "検索条件が正しくありません。"
+    "QUERY_INVALID": "検索条件が正しくありません。",
+    "TITLE_LIMIT_REACHED": "コミュニティ称号は 5 個までです。",
+    "TITLE_OFFICIAL": "公式称号を削除できるのは管理者だけです。",
+    "TITLE_CHANGED": "この称号は管理者によって変更されました。ページを再読み込みしてやり直してください。"
   }
 }

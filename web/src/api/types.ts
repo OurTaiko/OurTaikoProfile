@@ -16,6 +16,8 @@ export type Title = {
   description: string
   style: TitleStyle
   official: boolean
+  // The player who made it; null for the titles administrators keep.
+  ownerId: string | null
 }
 export type DanBadge = { index: number; verdict: number; gold: boolean; achievedAt: string }
 export type Nameplate = {

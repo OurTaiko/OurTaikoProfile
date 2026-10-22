@@ -163,6 +163,7 @@ export function AdminPage() {
                     description: '',
                     style: form.style,
                     official: form.official,
+                    ownerId: null,
                   },
                 }}
               />
@@ -189,6 +190,11 @@ export function AdminPage() {
                 <span className="text-xs text-muted-foreground">
                   {title.official ? t('titles.official') : t('titles.community')}
                 </span>
+                {title.ownerId && (
+                  <span className="text-xs text-muted-foreground">
+                    {t('admin.madeBy')} <code>{title.ownerId}</code>
+                  </span>
+                )}
                 <div className="ml-auto flex gap-2">
                   <Button
                     size="sm"

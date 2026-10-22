@@ -98,7 +98,24 @@
     "catalogLink": "모든 칭호 보기",
     "catalog": "칭호 목록",
     "catalogExplained": "획득할 수 있는 모든 칭호와 네임플레이트에서의 모습입니다.",
-    "catalogEmpty": "아직 칭호가 없습니다."
+    "catalogEmpty": "아직 칭호가 없습니다.",
+    "mine": "내 칭호",
+    "mineExplained": "직접 만든 단위 코스에서 줄 칭호를 만들 수 있습니다. 코스를 통과한 플레이어가 획득합니다. 커뮤니티 칭호는 최대 {{limit}}개까지 만들 수 있으며, 관리자가 공식으로 지정한 칭호는 개수에 포함되지 않습니다. 커뮤니티 칭호는 내 코스에서만, 공식 칭호는 공식 코스에서만 수여됩니다.",
+    "quota": "커뮤니티 칭호: {{used}} / {{limit}}",
+    "changeBand": "색상 변경",
+    "edit": "수정",
+    "delete": "삭제",
+    "confirmDelete": "칭호 「{{name}}」을(를) 삭제할까요? 이미 획득한 플레이어도 잃게 됩니다.",
+    "deleted": "삭제했습니다.",
+    "saved": "저장했습니다.",
+    "create": "새 칭호",
+    "editing": "칭호 수정",
+    "officialBandOnly": "이 칭호는 공식이 되었습니다. 색상만 바꿀 수 있습니다.",
+    "limitReached": "커뮤니티 칭호가 최대 {{limit}}개에 도달했습니다. 새로 만들려면 하나를 삭제하거나 관리자에게 공식 지정을 요청하세요.",
+    "keptStyles": "무지개색과 보라색은 공식 칭호용입니다.",
+    "save": "저장",
+    "createButton": "만들기",
+    "cancel": "취소"
   },
   "dans": {
     "badges": "단위 배지",
@@ -150,7 +167,8 @@
       "purple": "보라",
       "gold": "금색",
       "rainbow": "무지개"
-    }
+    },
+    "madeBy": "만든 사람"
   },
   "languages": {
     "en": "English",
@@ -169,6 +187,9 @@
     "TITLE_NOT_FOUND": "칭호를 찾을 수 없습니다.",
     "GRANT_NOT_FOUND": "이 사용자는 그 칭호가 없습니다.",
     "FORBIDDEN": "관리자만 가능합니다.",
-    "QUERY_INVALID": "조회 조건이 올바르지 않습니다."
+    "QUERY_INVALID": "조회 조건이 올바르지 않습니다.",
+    "TITLE_LIMIT_REACHED": "커뮤니티 칭호는 최대 5개입니다.",
+    "TITLE_OFFICIAL": "공식 칭호는 관리자만 삭제할 수 있습니다.",
+    "TITLE_CHANGED": "관리자가 방금 이 칭호를 수정했습니다. 페이지를 새로고침한 뒤 다시 시도하세요."
   }
 }
