@@ -65,17 +65,28 @@ type GrantedTitle struct {
 	New bool `json:"new"`
 }
 
+// SkippedTitle is a title an award asked for and could not give: no such title (not_found), an
+// official title from a community course (official_only), or another player's community title
+// (not_owner).
+type SkippedTitle struct {
+	ID     string `json:"id"`
+	Reason string `json:"reason"`
+}
+
 type Granted struct {
-	Dan    *GrantedDan    `json:"dan"`
-	Titles []GrantedTitle `json:"titles"`
+	Dan     *GrantedDan    `json:"dan"`
+	Titles  []GrantedTitle `json:"titles"`
+	Skipped []SkippedTitle `json:"skipped"`
 }
 
 // award is POST /internal/v1/awards, for services that ran a 段位 course: the attempt (key,
-// unique per service), the player, the course, whether it is official, the verdict (0 failed,
-// 1–3 red, 4–6 gold), the 段位 the course stands for (official courses only) and the titles
-// it gives on a pass. A failed attempt is recorded and gives nothing. A badge only goes up.
-// Community courses may give community titles only. Asking again with the same key returns
-// what was granted the first time.
+// unique per service), the player, the course and its maker, whether it is official, the
+// verdict (0 failed, 1–3 red, 4–6 gold), the 段位 the course stands for (official courses only)
+// and the titles it gives on a pass. A failed attempt is recorded and gives nothing. A badge
+// only goes up. A title the course may not give is skipped and the rest are given: official
+// titles come from official courses only, and a player's community title from that player's
+// courses only (the ones administrators keep from any course). Asking again with the same key
+// returns what was granted the first time.
 func (s *Server) award(w http.ResponseWriter, r *http.Request) {
 	service, ok := s.service(w, r)
 	if !ok {
@@ -86,6 +97,7 @@ func (s *Server) award(w http.ResponseWriter, r *http.Request) {
 		UserID      string   `json:"userId"`
 		CourseID    string   `json:"courseId"`
 		CourseTitle string   `json:"courseTitle"`
+		CourseOwner string   `json:"courseOwnerId"`
 		Official    bool     `json:"official"`
 		Verdict     int      `json:"verdict"`
 		Dan         *int     `json:"dan"`
@@ -94,7 +106,7 @@ func (s *Server) award(w http.ResponseWriter, r *http.Request) {
 	if !decode(w, r, &body) {
 		return
 	}
-	if len(body.Key) < 1 || len(body.Key) > 100 || !validSubject(body.UserID) || len(body.CourseID) > 100 || len(body.CourseTitle) > 200 ||
+	if len(body.Key) < 1 || len(body.Key) > 100 || !validSubject(body.UserID) || len(body.CourseID) > 100 || len(body.CourseTitle) > 200 || (body.CourseOwner != "" && !validSubject(body.CourseOwner)) ||
 		body.Verdict < 0 || body.Verdict > 6 || (body.Dan != nil && (*body.Dan < 0 || *body.Dan > 24)) || len(body.Titles) > 10 || (body.Dan != nil && !body.Official) {
 		problem(w, 422, "AWARD_INVALID", "奖励请求无效")
 		return
@@ -132,21 +144,25 @@ func (s *Server) award(w http.ResponseWriter, r *http.Request) {
 		internal(w, err)
 		return
 	}
-	granted := Granted{Titles: []GrantedTitle{}}
+	granted := Granted{Titles: []GrantedTitle{}, Skipped: []SkippedTitle{}}
 	if body.Verdict >= 1 {
 		for _, id := range body.Titles {
 			t, err := scanTitle(tx.QueryRow(ctx, `SELECT `+titleColumns+` FROM titles t WHERE t.id=$1`, id))
-			if errors.Is(err, pgx.ErrNoRows) {
-				problem(w, 422, "TITLE_NOT_FOUND", "称号不存在："+id)
-				return
-			}
-			if err != nil {
+			reason := ""
+			switch {
+			case errors.Is(err, pgx.ErrNoRows):
+				reason = "not_found"
+			case err != nil:
 				internal(w, err)
 				return
+			case t.Official && !body.Official:
+				reason = "official_only"
+			case !t.Official && t.OwnerID != nil && *t.OwnerID != body.CourseOwner:
+				reason = "not_owner"
 			}
-			if t.Official && !body.Official {
-				problem(w, 422, "TITLE_NOT_ALLOWED", "社区段位不能授予官方称号："+id)
-				return
+			if reason != "" {
+				granted.Skipped = append(granted.Skipped, SkippedTitle{ID: id, Reason: reason})
+				continue
 			}
 			tag, err := tx.Exec(ctx, `INSERT INTO user_titles(user_id,title_id,award_id) VALUES($1,$2,$3) ON CONFLICT DO NOTHING`, body.UserID, id, award)
 			if err != nil {

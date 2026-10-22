@@ -13,7 +13,8 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-// Title is one title of the catalog. Style names the game's title band.
+// Title is one title of the catalog. Style names the game's title band. OwnerID is the player
+// who made it (null for the titles administrators keep).
 type Title struct {
 	ID               string          `json:"id"`
 	Name             string          `json:"name"`
@@ -21,6 +22,7 @@ type Title struct {
 	Description      string          `json:"description"`
 	Style            string          `json:"style"`
 	Official         bool            `json:"official"`
+	OwnerID          *string         `json:"ownerId"`
 }
 
 // DanBadge is a player's best result of one 段位 (0 初級 .. 24 達人); verdict 4–6 is gold.
@@ -44,14 +46,20 @@ type Nameplate struct {
 var titleStyles = map[string]bool{"wood": true, "teal": true, "wood2": true, "purple": true, "gold": true, "rainbow": true}
 var titleID = regexp.MustCompile(`^[a-z0-9][a-z0-9-]{0,63}$`)
 
-const titleColumns = `t.id,t.name,t.name_translations,t.description,t.style,t.official`
+// Players make community titles for their own 段位 courses: at most five each, in any band but
+// the rainbow and purple ones, which are kept for official titles.
+const playerTitleLimit = 5
+
+var communityStyles = map[string]bool{"wood": true, "teal": true, "wood2": true, "gold": true}
+
+const titleColumns = `t.id,t.name,t.name_translations,t.description,t.style,t.official,t.owner_id`
 
 type rowScanner interface{ Scan(...any) error }
 
 func scanTitle(row rowScanner, extra ...any) (Title, error) {
 	var t Title
 	var translations []byte
-	err := row.Scan(append([]any{&t.ID, &t.Name, &translations, &t.Description, &t.Style, &t.Official}, extra...)...)
+	err := row.Scan(append([]any{&t.ID, &t.Name, &translations, &t.Description, &t.Style, &t.Official, &t.OwnerID}, extra...)...)
 	t.NameTranslations = translations
 	return t, err
 }
@@ -183,7 +191,10 @@ func (s *Server) userProfile(w http.ResponseWriter, r *http.Request) {
 	})
 }
 
+// titleCatalog is GET /api/v1/titles: every title, readable from any website (the 段位 editors of
+// the other OurTaiko websites pick reward titles from it).
 func (s *Server) titleCatalog(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Access-Control-Allow-Origin", "*")
 	rows, err := s.DB.Query(r.Context(), `SELECT `+titleColumns+` FROM titles t ORDER BY t.official DESC,t.created_at,t.id`)
 	if err != nil {
 		internal(w, err)
@@ -350,40 +361,51 @@ func (s *Server) wearNameplate(w http.ResponseWriter, r *http.Request) {
 	respond(w, 200, plate)
 }
 
-// saveTitle is PUT /api/v1/admin/titles/{id}: create or change a title of the catalog.
+// titleBody is a title as the website sends it.
+type titleBody struct {
+	Name             string            `json:"name"`
+	NameTranslations map[string]string `json:"nameTranslations"`
+	Description      string            `json:"description"`
+	Style            string            `json:"style"`
+	Official         bool              `json:"official"`
+}
+
+// text checks the name, its translations and the description, and gives the translations as
+// stored.
+func (b *titleBody) text() ([]byte, bool) {
+	b.Name = strings.TrimSpace(b.Name)
+	valid := b.Name != "" && utf8.RuneCountInString(b.Name) <= 40 && utf8.RuneCountInString(b.Description) <= 500
+	for language, name := range b.NameTranslations {
+		if !map[string]bool{"zh-Hans": true, "en": true, "ja": true, "ko": true}[language] || utf8.RuneCountInString(name) > 40 {
+			valid = false
+		}
+	}
+	if b.NameTranslations == nil {
+		b.NameTranslations = map[string]string{}
+	}
+	translations, _ := json.Marshal(b.NameTranslations)
+	return translations, valid
+}
+
+// saveTitle is PUT /api/v1/admin/titles/{id}: create or change a title of the catalog. A
+// player's title keeps its maker; making it official frees their place for another.
 func (s *Server) saveTitle(w http.ResponseWriter, r *http.Request) {
 	if _, ok := s.admin(w, r); !ok {
 		return
 	}
 	id := r.PathValue("id")
-	var body struct {
-		Name             string            `json:"name"`
-		NameTranslations map[string]string `json:"nameTranslations"`
-		Description      string            `json:"description"`
-		Style            string            `json:"style"`
-		Official         bool              `json:"official"`
-	}
+	var body titleBody
 	if !decode(w, r, &body) {
 		return
 	}
-	body.Name = strings.TrimSpace(body.Name)
-	valid := titleID.MatchString(id) && titleStyles[body.Style] && body.Name != "" && utf8.RuneCountInString(body.Name) <= 40 && utf8.RuneCountInString(body.Description) <= 500
-	for language, name := range body.NameTranslations {
-		if !map[string]bool{"zh-Hans": true, "en": true, "ja": true, "ko": true}[language] || utf8.RuneCountInString(name) > 40 {
-			valid = false
-		}
-	}
-	if !valid {
+	translations, valid := body.text()
+	if !valid || !titleID.MatchString(id) || !titleStyles[body.Style] {
 		problem(w, 422, "TITLE_INVALID", "称号信息无效")
 		return
 	}
-	if body.NameTranslations == nil {
-		body.NameTranslations = map[string]string{}
-	}
-	translations, _ := json.Marshal(body.NameTranslations)
-	t, err := scanTitle(s.DB.QueryRow(r.Context(), `INSERT INTO titles(id,name,name_translations,description,style,official) VALUES($1,$2,$3,$4,$5,$6)
+	t, err := scanTitle(s.DB.QueryRow(r.Context(), `INSERT INTO titles AS t(id,name,name_translations,description,style,official) VALUES($1,$2,$3,$4,$5,$6)
  ON CONFLICT(id) DO UPDATE SET name=EXCLUDED.name,name_translations=EXCLUDED.name_translations,description=EXCLUDED.description,style=EXCLUDED.style,official=EXCLUDED.official
- RETURNING id,name,name_translations,description,style,official`, id, body.Name, translations, body.Description, body.Style, body.Official))
+ RETURNING `+titleColumns, id, body.Name, translations, body.Description, body.Style, body.Official))
 	if err != nil {
 		internal(w, err)
 		return
@@ -402,6 +424,135 @@ func (s *Server) deleteTitle(w http.ResponseWriter, r *http.Request) {
 	}
 	if tag.RowsAffected() == 0 {
 		problem(w, 404, "TITLE_NOT_FOUND", "称号不存在")
+		return
+	}
+	respond(w, 200, map[string]bool{"ok": true})
+}
+
+// createOwnTitle is POST /api/v1/me/titles {name, nameTranslations, description, style}: a
+// community title the player can give in their own 段位 courses. Its id is made here.
+func (s *Server) createOwnTitle(w http.ResponseWriter, r *http.Request) {
+	v, ok := s.required(w, r, true)
+	if !ok {
+		return
+	}
+	var body titleBody
+	if !decode(w, r, &body) {
+		return
+	}
+	translations, valid := body.text()
+	if !valid || !communityStyles[body.Style] {
+		problem(w, 422, "TITLE_INVALID", "称号信息无效")
+		return
+	}
+	ctx := r.Context()
+	tx, err := s.DB.Begin(ctx)
+	if err != nil {
+		internal(w, err)
+		return
+	}
+	defer tx.Rollback(ctx)
+	// A player's titles one at a time, so two requests cannot both take the last place.
+	if _, err = tx.Exec(ctx, `SELECT pg_advisory_xact_lock(hashtextextended('titles:'||$1,0))`, v.User.ID); err != nil {
+		internal(w, err)
+		return
+	}
+	var count int
+	if err = tx.QueryRow(ctx, `SELECT count(*) FROM titles WHERE owner_id=$1 AND NOT official`, v.User.ID).Scan(&count); err != nil {
+		internal(w, err)
+		return
+	}
+	if count >= playerTitleLimit {
+		problem(w, 409, "TITLE_LIMIT_REACHED", "每人最多 5 个社区称号")
+		return
+	}
+	t, err := scanTitle(tx.QueryRow(ctx, `INSERT INTO titles AS t(id,name,name_translations,description,style,official,owner_id) VALUES($1,$2,$3,$4,$5,false,$6)
+ RETURNING `+titleColumns, ID(), body.Name, translations, body.Description, body.Style, v.User.ID))
+	if err != nil {
+		internal(w, err)
+		return
+	}
+	if err = tx.Commit(ctx); err != nil {
+		internal(w, err)
+		return
+	}
+	respond(w, 201, t)
+}
+
+// saveOwnTitle is PUT /api/v1/me/titles/{id}, the same body: the maker changes a community
+// title. Of an official one they change the band only (any band); the rest is ignored.
+func (s *Server) saveOwnTitle(w http.ResponseWriter, r *http.Request) {
+	v, ok := s.required(w, r, true)
+	if !ok {
+		return
+	}
+	var body titleBody
+	if !decode(w, r, &body) {
+		return
+	}
+	ctx := r.Context()
+	var official bool
+	err := s.DB.QueryRow(ctx, `SELECT official FROM titles WHERE id=$1 AND owner_id=$2`, r.PathValue("id"), v.User.ID).Scan(&official)
+	if errors.Is(err, pgx.ErrNoRows) {
+		problem(w, 404, "TITLE_NOT_FOUND", "称号不存在")
+		return
+	}
+	if err != nil {
+		internal(w, err)
+		return
+	}
+	var t Title
+	if official {
+		if !titleStyles[body.Style] {
+			problem(w, 422, "TITLE_INVALID", "称号信息无效")
+			return
+		}
+		t, err = scanTitle(s.DB.QueryRow(ctx, `UPDATE titles t SET style=$3 WHERE id=$1 AND owner_id=$2 RETURNING `+titleColumns, r.PathValue("id"), v.User.ID, body.Style))
+	} else {
+		translations, valid := body.text()
+		if !valid || !communityStyles[body.Style] {
+			problem(w, 422, "TITLE_INVALID", "称号信息无效")
+			return
+		}
+		// official stays false: an administrator may have made it official in the meantime.
+		t, err = scanTitle(s.DB.QueryRow(ctx, `UPDATE titles t SET name=$3,name_translations=$4,description=$5,style=$6 WHERE id=$1 AND owner_id=$2 AND NOT official RETURNING `+titleColumns,
+			r.PathValue("id"), v.User.ID, body.Name, translations, body.Description, body.Style))
+	}
+	if errors.Is(err, pgx.ErrNoRows) {
+		problem(w, 409, "TITLE_CHANGED", "称号刚被管理员修改，请刷新后重试")
+		return
+	}
+	if err != nil {
+		internal(w, err)
+		return
+	}
+	respond(w, 200, t)
+}
+
+// deleteOwnTitle is DELETE /api/v1/me/titles/{id}: the maker removes a community title. The
+// players who earned it lose it, and a nameplate wearing it wears none.
+func (s *Server) deleteOwnTitle(w http.ResponseWriter, r *http.Request) {
+	v, ok := s.required(w, r, true)
+	if !ok {
+		return
+	}
+	ctx := r.Context()
+	tag, err := s.DB.Exec(ctx, `DELETE FROM titles WHERE id=$1 AND owner_id=$2 AND NOT official`, r.PathValue("id"), v.User.ID)
+	if err != nil {
+		internal(w, err)
+		return
+	}
+	if tag.RowsAffected() == 0 {
+		var official bool
+		err = s.DB.QueryRow(ctx, `SELECT official FROM titles WHERE id=$1 AND owner_id=$2`, r.PathValue("id"), v.User.ID).Scan(&official)
+		switch {
+		case err == nil:
+			problem(w, 403, "TITLE_OFFICIAL", "官方称号只有管理员可以删除")
+		case errors.Is(err, pgx.ErrNoRows):
+			problem(w, 404, "TITLE_NOT_FOUND", "称号不存在")
+		default:
+			internal(w, err)
+		}
 		return
 	}
 	respond(w, 200, map[string]bool{"ok": true})
