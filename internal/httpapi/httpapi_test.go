@@ -380,13 +380,19 @@ func TestScoresOfEveryServiceInOneList(t *testing.T) {
 			json.NewEncoder(w).Encode(map[string]any{"items": rows[start:end], "total": len(rows)})
 		}))
 	}
-	fanmade := serve([]map[string]any{
+	// f2 and d1 kept their recordings; f3's is of files replaced since.
+	kept := func(r map[string]any, latest bool) map[string]any {
+		r["hasReplay"], r["isLatest"] = true, latest
+		return r
+	}
+	fanmadeRows := []map[string]any{
 		row("f1", "11111111111111111111111111111111", 900000, 8, "2026-01-03T00:00:00Z"),
-		row("f2", "22222222222222222222222222222222", 700000, 10, "2026-01-01T00:00:00Z"),
-		row("f3", "33333333333333333333333333333333", 990000, 3, "2025-12-01T00:00:00Z"),
-	}, false)
+		kept(row("f2", "22222222222222222222222222222222", 700000, 10, "2026-01-01T00:00:00Z"), true),
+		kept(row("f3", "33333333333333333333333333333333", 990000, 3, "2025-12-01T00:00:00Z"), false),
+	}
+	fanmade := serve(fanmadeRows, false)
 	defer fanmade.Close()
-	database := serve([]map[string]any{row("d1", 101, 950000, 9, "2026-01-02T00:00:00Z")}, false)
+	database := serve([]map[string]any{kept(row("d1", 101, 950000, 9, "2026-01-02T00:00:00Z"), true)}, false)
 	defer database.Close()
 	down := serve(nil, true)
 	defer down.Close()
@@ -420,6 +426,11 @@ func TestScoresOfEveryServiceInOneList(t *testing.T) {
 	}
 	if merged.Items[1].ChartURL != "https://database.test/charts/101" || merged.Items[0].ChartURL != "https://fanmade.test/charts/22222222222222222222222222222222" {
 		t.Fatal("chart links", merged.Items[0].ChartURL, merged.Items[1].ChartURL)
+	}
+	// A play with a recording links to it on its chart's page; one of replaced files does not.
+	if merged.Items[0].ReplayURL != "https://fanmade.test/charts/22222222222222222222222222222222?replay=f2" || merged.Items[1].ReplayURL != "https://database.test/charts/101?replay=d1" ||
+		merged.Items[2].ReplayURL != "" || merged.Items[3].ReplayURL != "" || !merged.Items[3].HasReplay {
+		t.Fatal("replay links", merged.Items[0].ReplayURL, merged.Items[1].ReplayURL, merged.Items[2].ReplayURL, merged.Items[3].ReplayURL)
 	}
 	if merged.Sources[2].Error == "" || merged.Sources[0].Count != 3 || merged.Sources[1].Count != 1 {
 		t.Fatalf("a service that fails is reported %+v", merged.Sources)

@@ -66,6 +66,8 @@ export type ScoreRow = {
   playCount?: number
   source: string
   chartUrl: string
+  /** The play's recording on the chart's page of its service; absent when there is none to show. */
+  replayUrl?: string
 }
 export type ScoreView = 'best' | 'all'
 export type ScoreSort = 'level' | 'score' | 'recent'

@@ -1,7 +1,13 @@
 import { useEffect, useState } from 'react'
 import { useTranslation } from 'react-i18next'
 import { Link, useParams, useSearchParams } from 'react-router-dom'
-import { ArrowSquareOutIcon, CaretLeftIcon, CaretRightIcon, StarIcon } from '@phosphor-icons/react'
+import {
+  ArrowSquareOutIcon,
+  CaretLeftIcon,
+  CaretRightIcon,
+  PlayIcon,
+  StarIcon,
+} from '@phosphor-icons/react'
 import { api, jsonRequest } from '@/api/client'
 import { endpoints } from '@/api/endpoints'
 import type {
@@ -265,6 +271,17 @@ function ScoresTab({ id, profile }: { id: string; profile: PublicProfile }) {
                         <Badge variant="outline">{sourceName(row.source)}</Badge>
                         {!row.isLatest && (
                           <Badge variant="secondary">{t('scores.oldVersion')}</Badge>
+                        )}
+                        {row.replayUrl && (
+                          <a
+                            href={row.replayUrl}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="inline-flex items-center gap-1 rounded-md border px-1.5 text-xs font-medium hover:bg-muted"
+                          >
+                            <PlayIcon className="size-3" aria-hidden="true" />
+                            {t('scores.replay')}
+                          </a>
                         )}
                       </div>
                     </TableCell>

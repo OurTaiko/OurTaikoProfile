@@ -79,6 +79,10 @@ type SourceScore struct {
 	PlayCount         *int            `json:"playCount,omitempty"`
 	Source            string          `json:"source"`
 	ChartURL          string          `json:"chartUrl"`
+	// The service kept the play's recording; ReplayURL opens it on the chart's page there. A
+	// recording of files replaced since does not fit the chart any more and has no address.
+	HasReplay bool   `json:"hasReplay"`
+	ReplayURL string `json:"replayUrl,omitempty"`
 }
 
 const (
@@ -153,6 +157,9 @@ func (s *Server) fetch(ctx context.Context, source Source, user, view, course st
 			id := strings.Trim(string(row.SongID), `"`)
 			if id != "" && strings.Trim(id, "0123456789abcdef") == "" {
 				row.ChartURL = source.Site + "/charts/" + id
+				if row.HasReplay && row.IsLatest && row.ID != "" {
+					row.ReplayURL = row.ChartURL + "?replay=" + url.QueryEscape(row.ID)
+				}
 			}
 			list.rows = append(list.rows, row)
 		}
